@@ -1,5 +1,7 @@
 package jayshawn.spring.jdbc.transaction;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +33,14 @@ public class BookShopService {
 	
 	//事务的传播行为使用propagation设定:即当前的事务方法被另外一个事务方法调用时如何使用事务，默认取值REQUIRED，即使用另外一个方法的事务,注意到两个事务不能在一个类中，否则不起作用。
 	//使用REQUIRES_NEW，如果买了很多本书，钱只够买一本，那么第一本会购买成功
-	//使用EQUIRED，如果买了很多本书，钱只够买一本，那么一本也不会买
+	//使用REQUIRED，如果买了很多本书，钱只够买一本，那么一本也不会买
 	//isolation=Isolation.READ_COMMITTED 用于规定事务的隔离级别 READ_COMMITTED读已提交吧 
-	@Transactional(propagation=Propagation.REQUIRES_NEW, isolation=Isolation.READ_COMMITTED)
+	@Transactional(propagation=Propagation.REQUIRES_NEW, 
+			isolation=Isolation.READ_COMMITTED,
+			rollbackFor={IOException.class, SQLException.class},
+			noRollbackFor={ArithmeticException.class},
+			readOnly=true,
+			timeout=30)
 	public void purchase(Integer id, String isbn){
 		int price = bookShopDao.findPrice(isbn);
 		bookShopDao.updateStock(isbn);

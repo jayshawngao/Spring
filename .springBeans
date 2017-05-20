@@ -9,6 +9,7 @@
 	<configs>
 		<config>src/main/resources/applicationContext-xml.xml</config>
 		<config>src/main/resources/applicationContext-jdbc.xml</config>
+		<config>src/main/resources/applicationContext-collection.xml</config>
 	</configs>
 	<autoconfigs>
 	</autoconfigs>

@@ -10,7 +10,7 @@
 	<bean id="arithmeticalCaculator" class="jayshawn.spring.aop.xml.ArithmeticalCaculator"></bean>	
 	<bean id="loggingAspect" class="jayshawn.spring.aop.xml.LoggingAspect"></bean>
 	<aop:config>
-		<aop:pointcut expression="execution(public int jayshawn.spring.aop.xml.ArithmeticalCaculator.*(..))" id="pointcut"/>
+		<aop:pointcut id="pointcut" expression="execution(public int jayshawn.spring.aop.xml.ArithmeticalCaculator.*(..))" />
 		<aop:aspect ref="loggingAspect">
 			<aop:before method="beforeMethod" pointcut-ref="pointcut"/>
 			<aop:after-returning method="AfterReturningMethod" pointcut-ref="pointcut" returning="result" />
